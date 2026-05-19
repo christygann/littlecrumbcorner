@@ -8,7 +8,7 @@ export default function Footer() {
         <div>
           <img src={LOGO_SRC} alt="" className="w-16 mb-4" />
           <div className="font-display italic text-[20px] mb-1">
-            — sweet things, made on the corner —
+            — sweet things by the window —
           </div>
           <div className="text-[13px] opacity-80">
             singapore · small batch · open by invitation
