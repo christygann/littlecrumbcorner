@@ -223,8 +223,8 @@ export default function DashboardView() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-[0.9rem] shadow-[0_2px_14px_rgba(107,76,59,0.05)] overflow-hidden">
-        <table className="w-full border-collapse text-[13px]">
+      <div className="bg-white rounded-[0.9rem] shadow-[0_2px_14px_rgba(107,76,59,0.05)] overflow-hidden overflow-x-auto">
+        <table className="w-full border-collapse text-[13px] min-w-[700px]">
           <thead className="bg-linen">
             <tr>
               {COLS.map((h, i) => (
