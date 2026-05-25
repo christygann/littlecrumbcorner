@@ -5,12 +5,12 @@ const MENU = [
   { category: 'Food', name: 'Burnt Cheesecake (slice)', price: 5.50 },
   { category: 'Food', name: 'Strawberry Shortcake (slice)', price: 5.00 },
   { category: 'Food', name: 'Brownie (slice)', price: 4.00 },
-  { category: 'Food', name: 'Apple Cinnamon Muffin (slice)', price: 3.80 },
-  { category: 'Drinks', name: 'Classic Matcha / Hojicha Latte', price: 5.50 },
-  { category: 'Drinks', name: 'Caramelised Banana Matcha', price: 7.00 },
-  { category: 'Drinks', name: 'Salted Maple Hojicha', price: 7.00 },
-  { category: 'Drinks', name: 'Lavender Earl Grey Tea with Matcha Cloud', price: 6.50 },
-  { category: 'Drinks', name: 'Grape Oolong Tea with Matcha Cloud', price: 6.50 },
+  { category: 'Food', name: 'Apple Cinnamon Muffin', price: 3.80 },
+  { category: 'Drinks', name: 'Classic Matcha / Hojicha Latte', price: 5.00 },
+  { category: 'Drinks', name: 'Caramelised Banana Matcha', price: 6.50 },
+  { category: 'Drinks', name: 'Salted Maple Hojicha', price: 6.00 },
+  { category: 'Drinks', name: 'Lavender Earl Grey Tea with Matcha Cloud', price: 6.00 },
+  { category: 'Drinks', name: 'Grape Oolong Tea with Matcha Cloud', price: 6.00 },
 ]
 
 const MENU_BY_NAME = Object.fromEntries(MENU.map(m => [m.name, m]))
