@@ -36,8 +36,8 @@ export default function App() {
     <div className="min-h-screen flex flex-col bg-cream text-cocoa">
       <Topbar showLogout={!!session} onLogout={signOut} />
       {session && (
-        <div className="border-b border-cocoa/[0.08] bg-white/60 backdrop-blur-sm overflow-x-auto">
-          <div className="max-w-[1100px] mx-auto px-4 sm:px-10 flex gap-0 min-w-fit">
+        <div className="sticky top-0 z-40 border-b border-cocoa/[0.08] bg-white/80 backdrop-blur-sm">
+          <div className="max-w-[1100px] mx-auto px-4 sm:px-10 flex gap-0">
             {NAV_TABS.map(t => (
               <button
                 key={t.key}
