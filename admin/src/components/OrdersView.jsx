@@ -4,8 +4,8 @@ import { db } from '../lib/supabase.js'
 const MENU = [
   { category: 'Food', name: 'Burnt Cheesecake (slice)', price: 5.50 },
   { category: 'Food', name: 'Strawberry Shortcake (slice)', price: 5.00 },
-  { category: 'Food', name: 'Brownie (slice)', price: 4.00 },
-  { category: 'Food', name: 'Apple Cinnamon Muffin', price: 3.80 },
+  { category: 'Food', name: 'Brownie (slice)', price: 4.50 },
+  { category: 'Food', name: 'Apple Cinnamon Muffin', price: 4.00 },
   { category: 'Drinks', name: 'Classic Matcha / Hojicha Latte', price: 5.00 },
   { category: 'Drinks', name: 'Caramelised Banana Matcha', price: 6.50 },
   { category: 'Drinks', name: 'Salted Maple Hojicha', price: 6.00 },

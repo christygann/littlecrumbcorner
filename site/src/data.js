@@ -14,12 +14,12 @@ export const MENU = [
     photo: '/strawberry-shortcake.png',
   },
   {
-    id: 'brownie', name: 'double fudge brownie', tag: '', price: '$4.00',
+    id: 'brownie', name: 'double fudge brownie', tag: '', price: '$4.50',
     blurb: 'Dense, fudgy, crackled top — dark chocolate folded through.',
     photo: '/double-fudge-brownie.png',
   },
   {
-    id: 'muffin', name: 'apple cinnamon muffin', tag: '', price: '$3.80',
+    id: 'muffin', name: 'apple cinnamon muffin', tag: '', price: '$4.00',
     blurb: 'Warm spiced apple folded with soft, tender crumb topping.',
     photo: '/apple-cinnamon-muffin.png',
   },
