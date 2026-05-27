@@ -606,6 +606,46 @@ export default function OrdersView() {
     setEditing(null)
   }
 
+  const handleExport = () => {
+    const itemMap = {}
+    for (const order of orders) {
+      for (const item of (order.order_items || [])) {
+        if (!itemMap[item.item_name]) itemMap[item.item_name] = { qty: 0, revenue: 0 }
+        itemMap[item.item_name].qty += item.quantity
+        itemMap[item.item_name].revenue += parseFloat(item.subtotal)
+      }
+    }
+
+    const getCategory = (name) => MENU.find(m => m.name === name)?.category ?? 'Food'
+
+    const rows = Object.entries(itemMap)
+      .map(([name, { qty, revenue }]) => ({ name, category: getCategory(name), qty, revenue }))
+      .sort((a, b) => {
+        if (a.category !== b.category) return a.category === 'Food' ? -1 : 1
+        return a.name.localeCompare(b.name)
+      })
+
+    const bakesRevenue  = rows.filter(r => r.category === 'Food').reduce((s, r) => s + r.revenue, 0)
+    const drinksRevenue = rows.filter(r => r.category === 'Drinks').reduce((s, r) => s + r.revenue, 0)
+
+    const lines = [
+      'Item,Category,Qty Sold,Revenue',
+      ...rows.map(r => `"${r.name}",${r.category === 'Food' ? 'Bakes' : 'Drinks'},${r.qty},$${r.revenue.toFixed(2)}`),
+      ',,',
+      `Bakes,,,$${bakesRevenue.toFixed(2)}`,
+      `Drinks,,,$${drinksRevenue.toFixed(2)}`,
+      `Total,,,$${(bakesRevenue + drinksRevenue).toFixed(2)}`,
+    ]
+
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv' })
+    const url  = URL.createObjectURL(blob)
+    const a    = document.createElement('a')
+    a.href     = url
+    a.download = `littlecrumbcorner-${new Date().toISOString().slice(0, 10)}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <div className="flex-1 p-4 sm:p-10 max-w-[1100px] w-full mx-auto">
       <div className="flex items-center gap-3 mb-7">
@@ -625,6 +665,11 @@ export default function OrdersView() {
         {tab !== 'new' && (
           <button className={ghostBtn} onClick={loadOrders} disabled={loading}>
             {loading ? '…' : 'refresh'}
+          </button>
+        )}
+        {tab === 'orders' && (
+          <button className={ghostBtn} onClick={handleExport} disabled={orders.length === 0}>
+            export csv
           </button>
         )}
       </div>
