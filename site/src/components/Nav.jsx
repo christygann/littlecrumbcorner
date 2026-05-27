@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { LOGO_SRC } from '../data.js'
 
-const LINKS = ['about', 'menu', 'home cafe']
+const LINKS = ['about', 'gallery', 'home cafe']
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
 
   return (
-    <nav className="relative max-w-[1280px] mx-auto px-5 py-[18px] sm:px-8 sm:py-5 lg:px-16 lg:py-7 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-cocoa/[0.06]">
+    <div className="max-w-[1280px] mx-auto px-5 py-[18px] sm:px-8 sm:py-5 lg:px-16 lg:py-7 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <img src={LOGO_SRC} alt="" className="w-[38px] h-auto" />
         <span className="font-display font-normal text-[18px] text-espresso tracking-[0.04em]">
@@ -55,6 +56,7 @@ export default function Nav() {
           ))}
         </ul>
       )}
+    </div>
     </nav>
   )
 }
