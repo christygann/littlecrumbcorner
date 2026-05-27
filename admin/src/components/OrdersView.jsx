@@ -15,6 +15,8 @@ const MENU = [
 
 const MENU_BY_NAME = Object.fromEntries(MENU.map(m => [m.name, m]))
 
+const ICE_CREAM = { name: 'Vanilla Ice Cream Scoop', price: 1.00 }
+
 const STATUS_STYLES = {
   placed:   { bg: 'bg-deep-rose/[0.14]',  badge: 'bg-deep-rose/20 text-deep-rose',    dot: 'bg-deep-rose' },
   prepared: { bg: 'bg-sage-light/60',      badge: 'bg-sage-light/80 text-sage-dark',   dot: 'bg-sage' },
@@ -41,6 +43,7 @@ function NewOrderTab({ onOrderPlaced }) {
   const [customerName, setCustomerName] = useState('')
   const [selectedItem, setSelectedItem] = useState(MENU[0].name)
   const [qty, setQty] = useState(1)
+  const [iceCreamScoop, setIceCreamScoop] = useState(false)
   const [cart, setCart] = useState([])
   const [saving, setSaving] = useState(false)
   const [err, setErr] = useState(null)
@@ -50,16 +53,24 @@ function NewOrderTab({ onOrderPlaced }) {
     const item = MENU_BY_NAME[selectedItem]
     if (!item) return
     setCart(prev => {
-      const existing = prev.find(c => c.name === item.name)
+      let next = [...prev]
+      const existing = next.find(c => c.name === item.name)
       if (existing) {
         const newQty = existing.qty + qty
-        return prev.map(c =>
-          c.name === item.name
-            ? { ...c, qty: newQty, subtotal: parseFloat((newQty * c.price).toFixed(2)) }
-            : c
-        )
+        next = next.map(c => c.name === item.name ? { ...c, qty: newQty, subtotal: parseFloat((newQty * c.price).toFixed(2)) } : c)
+      } else {
+        next = [...next, { name: item.name, price: item.price, qty, subtotal: parseFloat((item.price * qty).toFixed(2)) }]
       }
-      return [...prev, { name: item.name, price: item.price, qty, subtotal: parseFloat((item.price * qty).toFixed(2)) }]
+      if (item.name === 'Brownie (slice)' && iceCreamScoop) {
+        const existingIC = next.find(c => c.name === ICE_CREAM.name)
+        if (existingIC) {
+          const newQty = existingIC.qty + qty
+          next = next.map(c => c.name === ICE_CREAM.name ? { ...c, qty: newQty, subtotal: parseFloat((newQty * c.price).toFixed(2)) } : c)
+        } else {
+          next = [...next, { name: ICE_CREAM.name, price: ICE_CREAM.price, qty, subtotal: parseFloat((ICE_CREAM.price * qty).toFixed(2)) }]
+        }
+      }
+      return next
     })
   }
 
@@ -137,7 +148,7 @@ function NewOrderTab({ onOrderPlaced }) {
               <select
                 className={fieldCls}
                 value={selectedItem}
-                onChange={e => setSelectedItem(e.target.value)}
+                onChange={e => { setSelectedItem(e.target.value); setIceCreamScoop(false) }}
               >
                 {['Food', 'Drinks'].map(cat => (
                   <optgroup key={cat} label={cat}>
@@ -157,6 +168,12 @@ function NewOrderTab({ onOrderPlaced }) {
             />
             <button onClick={addToCart} className={darkBtn}>add</button>
           </div>
+          {selectedItem === 'Brownie (slice)' && (
+            <label className="flex items-center gap-2 mt-2.5 cursor-pointer select-none">
+              <input type="checkbox" checked={iceCreamScoop} onChange={e => setIceCreamScoop(e.target.checked)} className="accent-cocoa" />
+              <span className="text-[13px] text-cocoa/70">add vanilla ice cream scoop <span className="text-cocoa/40">(+$1.00 ea.)</span></span>
+            </label>
+          )}
         </div>
       </div>
 
@@ -215,6 +232,7 @@ function EditOrderModal({ order, onSave, onClose }) {
   )
   const [selectedItem, setSelectedItem] = useState(MENU[0].name)
   const [qty, setQty] = useState(1)
+  const [iceCreamScoop, setIceCreamScoop] = useState(false)
   const [saving, setSaving] = useState(false)
   const [err, setErr] = useState(null)
 
@@ -222,16 +240,24 @@ function EditOrderModal({ order, onSave, onClose }) {
     const item = MENU_BY_NAME[selectedItem]
     if (!item) return
     setCart(prev => {
-      const existing = prev.find(c => c.name === item.name)
+      let next = [...prev]
+      const existing = next.find(c => c.name === item.name)
       if (existing) {
         const newQty = existing.qty + qty
-        return prev.map(c =>
-          c.name === item.name
-            ? { ...c, qty: newQty, subtotal: parseFloat((newQty * c.price).toFixed(2)) }
-            : c
-        )
+        next = next.map(c => c.name === item.name ? { ...c, qty: newQty, subtotal: parseFloat((newQty * c.price).toFixed(2)) } : c)
+      } else {
+        next = [...next, { name: item.name, price: item.price, qty, subtotal: parseFloat((item.price * qty).toFixed(2)) }]
       }
-      return [...prev, { name: item.name, price: item.price, qty, subtotal: parseFloat((item.price * qty).toFixed(2)) }]
+      if (item.name === 'Brownie (slice)' && iceCreamScoop) {
+        const existingIC = next.find(c => c.name === ICE_CREAM.name)
+        if (existingIC) {
+          const newQty = existingIC.qty + qty
+          next = next.map(c => c.name === ICE_CREAM.name ? { ...c, qty: newQty, subtotal: parseFloat((newQty * c.price).toFixed(2)) } : c)
+        } else {
+          next = [...next, { name: ICE_CREAM.name, price: ICE_CREAM.price, qty, subtotal: parseFloat((ICE_CREAM.price * qty).toFixed(2)) }]
+        }
+      }
+      return next
     })
   }
 
@@ -297,7 +323,7 @@ function EditOrderModal({ order, onSave, onClose }) {
           <p className={`${labelCls} mb-3`}>Add items</p>
           <div className="flex gap-2">
             <div className="flex-1 min-w-0">
-              <select className={fieldCls} value={selectedItem} onChange={e => setSelectedItem(e.target.value)}>
+              <select className={fieldCls} value={selectedItem} onChange={e => { setSelectedItem(e.target.value); setIceCreamScoop(false) }}>
                 {['Food', 'Drinks'].map(cat => (
                   <optgroup key={cat} label={cat}>
                     {MENU.filter(m => m.category === cat).map(m => (
@@ -314,6 +340,12 @@ function EditOrderModal({ order, onSave, onClose }) {
             />
             <button onClick={addToCart} className={darkBtn}>add</button>
           </div>
+          {selectedItem === 'Brownie (slice)' && (
+            <label className="flex items-center gap-2 mt-2.5 cursor-pointer select-none">
+              <input type="checkbox" checked={iceCreamScoop} onChange={e => setIceCreamScoop(e.target.checked)} className="accent-cocoa" />
+              <span className="text-[13px] text-cocoa/70">add vanilla ice cream scoop <span className="text-cocoa/40">(+$1.00 ea.)</span></span>
+            </label>
+          )}
         </div>
 
         {cart.length > 0 && (
