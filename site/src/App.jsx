@@ -8,7 +8,7 @@ import Footer from './components/Footer.jsx'
 
 export default function App() {
   return (
-    <div className="relative overflow-x-hidden">
+    <div className="relative overflow-x-clip">
       <Nav />
       <Hero />
       <div className="text-center text-sage tracking-[0.6em] text-lg mb-6">· · ·</div>

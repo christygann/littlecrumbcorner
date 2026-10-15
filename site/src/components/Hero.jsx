@@ -2,7 +2,8 @@ import { LOCKUP_SRC } from '../data.js'
 
 export default function Hero() {
   return (
-    <section className="relative text-center px-5 pt-10 pb-16 sm:px-8 sm:pt-14 sm:pb-20 lg:px-16 lg:pt-20 lg:pb-[110px]">
+    // Fills the screen below the sticky nav (67 / 77 / 93px tall) so only the logo shows until you scroll
+    <section className="relative flex items-center justify-center text-center px-5 sm:px-8 lg:px-16 min-h-[calc(100svh-67px)] sm:min-h-[calc(100svh-77px)] lg:min-h-[calc(100svh-93px)]">
       {/* Decorative blobs */}
       <div className="absolute top-[-60px] right-[-80px] w-[360px] h-[260px] bg-blush opacity-40 rounded-full pointer-events-none" />
       <div className="absolute bottom-[-100px] left-[-100px] w-[400px] h-[300px] bg-sage-light opacity-40 rounded-full pointer-events-none" />
