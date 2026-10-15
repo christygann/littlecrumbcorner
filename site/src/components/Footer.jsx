@@ -6,13 +6,7 @@ export default function Footer() {
     <footer className="bg-blush text-deep-rose px-5 pt-10 pb-7 sm:px-8 sm:pt-12 sm:pb-8 lg:px-16 lg:pt-16 lg:pb-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-10 max-w-[920px] mx-auto items-end">
         <div>
-          <img src={LOGO_SRC} alt="" className="w-16 mb-4" />
-          <div className="font-display italic text-[20px] mb-1">
-            — sweet things by the window —
-          </div>
-          <div className="text-[13px] opacity-80">
-            singapore · small batch · open by invitation
-          </div>
+          <img src={LOGO_SRC} alt="" className="w-16" />
         </div>
         <div className="sm:text-right">
           <div className="text-[10px] tracking-[0.3em] uppercase font-medium mb-3">

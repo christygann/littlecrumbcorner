@@ -36,7 +36,7 @@ function exportCSV(signups) {
 const COLS = ['date', 'name', 'telegram / phone', 'slot', 'dietary', 'referral', 'note', '']
 
 const ghostBtn = 'py-[7px] px-4 rounded-full bg-transparent text-cocoa border border-cocoa/25 text-[10px] tracking-[0.25em] uppercase font-medium cursor-pointer hover:opacity-85 transition-opacity disabled:opacity-50'
-const darkBtn  = 'py-[7px] px-4 rounded-full bg-cocoa text-cream border-none text-[10px] tracking-[0.25em] uppercase font-medium cursor-pointer hover:opacity-85 transition-opacity'
+const darkBtn  = 'py-[7px] px-4 rounded-full bg-cocoa text-cream border-none text-[10px] tracking-[0.25em] uppercase font-medium cursor-pointer hover:bg-espresso transition-colors'
 
 function EditModal({ signup, onSave, onClose }) {
   const [form, setForm] = useState({
@@ -74,7 +74,7 @@ function EditModal({ signup, onSave, onClose }) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-[0.9rem] p-7 w-full max-w-md shadow-[0_8px_40px_rgba(61,43,36,0.15)] max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-[0.9rem] p-7 w-full max-w-md shadow-lg max-h-[90vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}
       >
         <h3 className="font-display font-light text-[26px] text-espresso mb-1">edit sign-up</h3>
@@ -223,7 +223,7 @@ export default function DashboardView() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-[0.9rem] shadow-[0_2px_14px_rgba(107,76,59,0.05)] overflow-hidden overflow-x-auto">
+      <div className="bg-white rounded-[0.9rem] shadow-sm overflow-hidden overflow-x-auto">
         <table className="w-full border-collapse text-[13px] min-w-[700px]">
           <thead className="bg-linen">
             <tr>
@@ -237,13 +237,13 @@ export default function DashboardView() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={8} className="text-center py-16 font-display italic text-[20px] text-cocoa/45">
+                <td colSpan={8} className="text-center py-16 font-display text-[20px] text-cocoa/45">
                   loading…
                 </td>
               </tr>
             ) : filtered.length === 0 ? (
               <tr>
-                <td colSpan={8} className="text-center py-16 font-display italic text-[20px] text-cocoa/45">
+                <td colSpan={8} className="text-center py-16 font-display text-[20px] text-cocoa/45">
                   {query.trim() ? 'no matches found' : 'no sign-ups yet'}
                 </td>
               </tr>
@@ -266,12 +266,12 @@ export default function DashboardView() {
                 <td className="px-4 py-3.5 border-b border-cocoa/[0.06] align-top hidden sm:table-cell">
                   {s.dietary
                     ? <span className="inline-block px-2.5 py-0.5 bg-sage-light/40 rounded-full text-[11px] text-sage-dark">{s.dietary}</span>
-                    : <span className="text-cocoa/45 italic">none</span>}
+                    : <span className="text-cocoa/45">none</span>}
                 </td>
                 <td className="px-4 py-3.5 border-b border-cocoa/[0.06] align-top hidden sm:table-cell">
                   {s.referral
                     ? <span className="inline-block px-2.5 py-0.5 bg-sage-light/40 rounded-full text-[11px] text-sage-dark">{s.referral}</span>
-                    : <span className="text-cocoa/45 italic">—</span>}
+                    : <span className="text-cocoa/45">—</span>}
                 </td>
                 <td className="px-4 py-3.5 border-b border-cocoa/[0.06] align-top text-[12px] opacity-75 max-w-[220px] hidden sm:table-cell">
                   {s.note || ''}

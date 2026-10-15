@@ -1,4 +1,4 @@
-import { LOGO_SRC } from '../data.js'
+import { LOCKUP_SRC } from '../data.js'
 
 export default function Hero() {
   return (
@@ -8,16 +8,12 @@ export default function Hero() {
       <div className="absolute bottom-[-100px] left-[-100px] w-[400px] h-[300px] bg-sage-light opacity-40 rounded-full pointer-events-none" />
 
       <div className="relative z-[1]">
-        <img
-          src={LOGO_SRC} alt="little crumb corner"
-          className="w-[110px] sm:w-[140px] lg:w-[180px] h-auto mx-auto mb-7"
-        />
-        <h1 className="font-display font-light text-[40px] sm:text-[56px] lg:text-[78px] text-espresso m-0 mb-3.5 leading-[1.05] tracking-[0.005em]">
-          little crumb corner
+        <h1 className="m-0">
+          <img
+            src={LOCKUP_SRC} alt="little crumb corner"
+            className="w-full max-w-[320px] sm:max-w-[480px] lg:max-w-[640px] h-auto mx-auto"
+          />
         </h1>
-        <div className="font-display italic font-light text-[22px] text-cocoa">
-          sweet things by the window
-        </div>
       </div>
     </section>
   )

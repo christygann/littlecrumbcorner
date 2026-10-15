@@ -2,16 +2,24 @@
 
 @theme {
   --color-blush:      #F2C4CE;
+  --color-rose:       #E8A0B0;
+  --color-dusty-pink: #D4728A;
   --color-deep-rose:  #B85070;
   --color-sage:       #A8B89A;
   --color-sage-light: #C8D8BC;
   --color-sage-dark:  #7A9068;
+  --color-pine:       #5C7050;
   --color-cream:      #FAF6F0;
   --color-linen:      #F0E8DE;
   --color-cocoa:      #6B4C3B;
   --color-espresso:   #3D2B24;
-  --font-display: "Cormorant Garamond", Garamond, serif;
-  --font-body:    "Jost", system-ui, sans-serif;
+  --font-display: "Quicksand", "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-body:    "Jost", "Helvetica Neue", system-ui, sans-serif;
+
+  /* Shadows — warm cocoa tint, never grey */
+  --shadow-sm: 0 2px 14px rgba(107, 76, 59, 0.05);
+  --shadow:    0 4px 24px rgba(107, 76, 59, 0.08);
+  --shadow-lg: 0 8px 30px rgba(107, 76, 59, 0.10);
 }
 
 @layer base {
@@ -20,6 +28,8 @@
   body {
     font-family: var(--font-body);
     font-weight: 300;
+    color: var(--color-cocoa);
+    background: var(--color-cream);
     -webkit-font-smoothing: antialiased;
   }
 

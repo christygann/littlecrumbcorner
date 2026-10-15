@@ -49,10 +49,10 @@ export default function SignUpForm() {
 
   if (submitted) return (
     <div className="py-7 px-6 text-center text-cocoa">
-      <div className="font-display italic font-light text-[28px] mb-1.5">thank you —</div>
+      <div className="font-display font-light text-[28px] mb-1.5">thank you —</div>
       <div className="text-cocoa/65 leading-[1.55]">
         see you at our home cafe<br />
-        <span className="inline-block mt-2.5 font-display italic text-[18px] text-cocoa">
+        <span className="inline-block mt-2.5 font-display text-[18px] text-cocoa">
           38 Jalan Kechot · 419223
         </span>
       </div>
@@ -121,7 +121,7 @@ export default function SignUpForm() {
 
       <button
         type="submit" disabled={loading}
-        className={`mt-1.5 py-3.5 px-6 rounded-full bg-cocoa text-cream border-none text-[11px] tracking-[0.3em] uppercase font-medium transition-opacity duration-200 ${
+        className={`mt-1.5 py-3.5 px-6 rounded-full bg-cocoa text-cream border-none text-[11px] tracking-[0.3em] uppercase font-medium hover:bg-espresso transition-colors duration-200 ${
           loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'
         }`}
       >

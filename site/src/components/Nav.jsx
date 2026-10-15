@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { LOGO_SRC } from '../data.js'
+import { LOCKUP_SRC } from '../data.js'
 
 const LINKS = ['about', 'gallery', 'home cafe']
 
@@ -9,12 +9,7 @@ export default function Nav() {
   return (
     <nav className="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-cocoa/[0.06]">
     <div className="max-w-[1280px] mx-auto px-5 py-[18px] sm:px-8 sm:py-5 lg:px-16 lg:py-7 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <img src={LOGO_SRC} alt="" className="w-[38px] h-auto" />
-        <span className="font-display font-normal text-[18px] text-espresso tracking-[0.04em]">
-          little crumb corner
-        </span>
-      </div>
+      <img src={LOCKUP_SRC} alt="little crumb corner" className="h-[30px] sm:h-[36px] w-auto" />
 
       {/* Mobile toggle */}
       <button
@@ -45,7 +40,7 @@ export default function Nav() {
 
       {/* Mobile dropdown */}
       {open && (
-        <ul className="absolute top-[60px] right-5 z-10 sm:hidden list-none m-0 flex flex-col gap-3.5 bg-cream px-6 py-[18px] border border-cocoa/12 rounded-[1.2rem] shadow-[0_8px_32px_rgba(107,76,59,0.10)]">
+        <ul className="absolute top-[60px] right-5 z-10 sm:hidden list-none m-0 flex flex-col gap-3.5 bg-cream px-6 py-[18px] border border-cocoa/12 rounded-[1.2rem] shadow-lg">
           {LINKS.map(l => (
             <li key={l}>
               <a href={`#${l.replace(' ', '-')}`} onClick={() => setOpen(false)}

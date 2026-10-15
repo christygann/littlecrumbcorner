@@ -27,7 +27,7 @@ export default function App() {
   }
 
   if (session === undefined) return (
-    <div className="flex items-center justify-center h-screen font-display text-[22px] text-sage italic">
+    <div className="flex items-center justify-center h-screen font-display text-[22px] text-sage">
       loading…
     </div>
   )

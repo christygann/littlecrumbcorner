@@ -10,7 +10,7 @@ export default function Menu() {
         {MENU.map(item => (
           <article
             key={item.id}
-            className="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-3.5 sm:gap-[18px] bg-white rounded-[1.2rem] p-4 sm:p-5 shadow-[0_2px_14px_rgba(107,76,59,0.05)]"
+            className="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-3.5 sm:gap-[18px] bg-white rounded-[1.2rem] p-4 sm:p-5 shadow-sm"
           >
             <img
               src={item.photo} alt={item.name}
@@ -43,7 +43,7 @@ export default function Menu() {
         <div className="text-center text-[10px] tracking-[0.3em] uppercase text-sage-dark font-medium mb-7">
           · and to drink ·
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-12 bg-white rounded-[1.2rem] px-6 py-6 sm:px-11 sm:py-9 shadow-[0_2px_14px_rgba(107,76,59,0.05)]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-12 bg-white rounded-[1.2rem] px-6 py-6 sm:px-11 sm:py-9 shadow-sm">
           {DRINKS.map(g => (
             <div key={g.group}>
               <h4 className="font-display font-normal text-[26px] text-espresso m-0 mb-3.5 tracking-[0.01em]">

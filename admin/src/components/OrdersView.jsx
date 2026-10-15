@@ -33,7 +33,7 @@ function fmtDate(iso) {
 }
 
 const ghostBtn = 'py-[7px] px-4 rounded-full bg-transparent text-cocoa border border-cocoa/25 text-[12px] tracking-[0.25em] uppercase font-medium cursor-pointer hover:opacity-85 transition-opacity disabled:opacity-50'
-const darkBtn  = 'py-[7px] px-4 rounded-full bg-cocoa text-cream border-none text-[12px] tracking-[0.25em] uppercase font-medium cursor-pointer hover:opacity-85 transition-opacity disabled:opacity-50'
+const darkBtn  = 'py-[7px] px-4 rounded-full bg-cocoa text-cream border-none text-[12px] tracking-[0.25em] uppercase font-medium cursor-pointer hover:bg-espresso transition-colors disabled:opacity-50'
 const fieldCls = 'w-full border border-cocoa/20 rounded-lg px-3 py-2 text-[15px] text-cocoa bg-white placeholder:text-cocoa/30'
 const labelCls = 'text-[12px] tracking-[0.2em] uppercase text-sage-dark font-medium'
 
@@ -141,7 +141,7 @@ function NewOrderTab({ onOrderPlaced }) {
           />
         </div>
 
-        <div className="bg-white rounded-[0.9rem] p-5 shadow-[0_2px_14px_rgba(107,76,59,0.05)]">
+        <div className="bg-white rounded-[0.9rem] p-5 shadow-sm">
           <p className={`${labelCls} mb-3`}>Add items</p>
           <div className="flex gap-2">
             <div className="flex-1 min-w-0">
@@ -179,12 +179,12 @@ function NewOrderTab({ onOrderPlaced }) {
 
       {/* Right — order summary */}
       <div className="w-full lg:w-80 lg:shrink-0 lg:sticky lg:top-6 lg:self-start">
-        <div className="bg-white rounded-[0.9rem] shadow-[0_2px_14px_rgba(107,76,59,0.05)] overflow-hidden">
+        <div className="bg-white rounded-[0.9rem] shadow-sm overflow-hidden">
           <div className="px-5 py-3.5 border-b border-cocoa/[0.06]">
             <p className={labelCls}>Order summary</p>
           </div>
           {cart.length === 0 ? (
-            <div className="px-5 py-10 text-center font-display italic text-[18px] text-cocoa/30">no items yet</div>
+            <div className="px-5 py-10 text-center font-display text-[18px] text-cocoa/30">no items yet</div>
           ) : (
             <>
               {cart.map(c => (
@@ -308,7 +308,7 @@ function EditOrderModal({ order, onSave, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-espresso/25 backdrop-blur-[2px] flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-cream rounded-[0.9rem] p-7 w-full max-w-lg shadow-[0_8px_40px_rgba(61,43,36,0.15)] max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+      <div className="bg-cream rounded-[0.9rem] p-7 w-full max-w-lg shadow-lg max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
         <h3 className="font-display font-light text-[26px] text-espresso mb-1">edit order</h3>
         <p className="text-[13px] text-cocoa/50 mb-6">{order.customer_name}</p>
 
@@ -319,7 +319,7 @@ function EditOrderModal({ order, onSave, onClose }) {
           <input className={fieldCls} value={customerName} onChange={e => setCustomerName(e.target.value)} />
         </div>
 
-        <div className="bg-white rounded-[0.9rem] p-4 shadow-[0_2px_14px_rgba(107,76,59,0.05)] mb-4">
+        <div className="bg-white rounded-[0.9rem] p-4 shadow-sm mb-4">
           <p className={`${labelCls} mb-3`}>Add items</p>
           <div className="flex gap-2">
             <div className="flex-1 min-w-0">
@@ -349,7 +349,7 @@ function EditOrderModal({ order, onSave, onClose }) {
         </div>
 
         {cart.length > 0 && (
-          <div className="bg-white rounded-[0.9rem] shadow-[0_2px_14px_rgba(107,76,59,0.05)] mb-5 overflow-hidden">
+          <div className="bg-white rounded-[0.9rem] shadow-sm mb-5 overflow-hidden">
             {cart.map(c => (
               <div key={c.name} className="flex items-center gap-3 px-4 py-3 border-b border-cocoa/[0.04] last:border-none hover:bg-cream/60 transition-colors">
                 <span className="flex-1 text-[14px] text-cocoa min-w-0 leading-snug">{c.name}</span>
@@ -395,17 +395,17 @@ function AllOrdersTab({ orders, loading, onDelete, onStatusChange, onEdit }) {
     : orders
 
   if (loading) return (
-    <div className="text-center py-20 font-display italic text-[22px] text-cocoa/40">loading…</div>
+    <div className="text-center py-20 font-display text-[22px] text-cocoa/40">loading…</div>
   )
 
   return (
     <div>
       <div className="flex gap-4 mb-6 flex-wrap">
-        <div className="bg-white rounded-[0.9rem] px-6 py-4 shadow-[0_2px_14px_rgba(107,76,59,0.05)]">
+        <div className="bg-white rounded-[0.9rem] px-6 py-4 shadow-sm">
           <p className={`${labelCls} mb-1`}>Total collected</p>
           <p className="font-display font-light text-[28px] text-espresso">${totalCollected.toFixed(2)}</p>
         </div>
-        <div className="bg-white rounded-[0.9rem] px-6 py-4 shadow-[0_2px_14px_rgba(107,76,59,0.05)]">
+        <div className="bg-white rounded-[0.9rem] px-6 py-4 shadow-sm">
           <p className={`${labelCls} mb-1`}>Orders</p>
           <p className="font-display font-light text-[28px] text-espresso">{orders.length}</p>
         </div>
@@ -433,7 +433,7 @@ function AllOrdersTab({ orders, loading, onDelete, onStatusChange, onEdit }) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="text-center py-20 font-display italic text-[22px] text-cocoa/40">
+        <div className="text-center py-20 font-display text-[22px] text-cocoa/40">
           {query.trim() ? 'no matches found' : 'no orders yet'}
         </div>
       ) : (
@@ -441,7 +441,7 @@ function AllOrdersTab({ orders, loading, onDelete, onStatusChange, onEdit }) {
           {filtered.map(o => {
             const style = STATUS_STYLES[o.status] || STATUS_STYLES.placed
             return (
-              <div key={o.id} className={`${style.bg} rounded-[0.9rem] shadow-[0_2px_14px_rgba(107,76,59,0.05)] overflow-hidden transition-colors duration-300`}>
+              <div key={o.id} className={`${style.bg} rounded-[0.9rem] shadow-sm overflow-hidden transition-colors duration-300`}>
                 {/* Order header */}
                 <div className="flex items-start justify-between px-5 py-4 border-b border-cocoa/[0.06] flex-wrap gap-3">
                   <div className="flex flex-col gap-1 min-w-0">
@@ -534,13 +534,13 @@ function ItemStatsTab({ orders }) {
   const maxQty = Math.max(...sorted.map(s => s.qty), 1)
 
   if (orders.length === 0) return (
-    <div className="text-center py-20 font-display italic text-[22px] text-cocoa/40">no orders yet</div>
+    <div className="text-center py-20 font-display text-[22px] text-cocoa/40">no orders yet</div>
   )
 
   return (
     <div className="max-w-xl flex flex-col gap-3">
       {sorted.map(item => (
-        <div key={item.name} className="bg-white rounded-[0.9rem] px-5 py-4 shadow-[0_2px_14px_rgba(107,76,59,0.05)]">
+        <div key={item.name} className="bg-white rounded-[0.9rem] px-5 py-4 shadow-sm">
           <div className="flex items-center justify-between mb-2.5">
             <div className="flex items-center gap-2 min-w-0">
               <span className={`text-[11px] tracking-[0.15em] uppercase font-medium px-2 py-0.5 rounded-full shrink-0 ${
@@ -649,7 +649,7 @@ export default function OrdersView() {
   return (
     <div className="flex-1 p-4 sm:p-10 max-w-[1100px] w-full mx-auto">
       <div className="flex items-center gap-3 mb-7">
-        <div className="flex gap-1 bg-white rounded-full p-1 shadow-[0_2px_14px_rgba(107,76,59,0.05)]">
+        <div className="flex gap-1 bg-white rounded-full p-1 shadow-sm">
           {TABS.map(t => (
             <button
               key={t.key}

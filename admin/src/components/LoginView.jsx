@@ -29,7 +29,7 @@ export default function LoginView({ onSuccess }) {
 
   return (
     <div className="flex-1 flex items-center justify-center p-10">
-      <div className="w-full max-w-[380px] bg-white rounded-[0.9rem] px-10 py-11 shadow-[0_4px_32px_rgba(107,76,59,0.08)]">
+      <div className="w-full max-w-[380px] bg-white rounded-[0.9rem] px-10 py-11 shadow">
         <h1 className="font-display font-light text-[30px] text-espresso mb-1.5">sign in</h1>
         <p className="text-[13px] text-cocoa/60 mb-8">Admin access only</p>
 
@@ -52,8 +52,8 @@ export default function LoginView({ onSuccess }) {
           </div>
           <button
             type="submit" disabled={loading}
-            className={`mt-2 py-[9px] px-5 rounded-full bg-cocoa text-cream border-none w-full text-[11px] tracking-[0.25em] uppercase font-medium transition-opacity ${
-              loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:opacity-85'
+            className={`mt-2 py-[9px] px-5 rounded-full bg-cocoa text-cream border-none w-full text-[11px] tracking-[0.25em] uppercase font-medium transition-colors ${
+              loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:bg-espresso'
             }`}
           >
             {loading ? 'signing in …' : 'sign in'}

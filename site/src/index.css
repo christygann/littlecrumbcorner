@@ -16,8 +16,13 @@
   --color-espresso:   #3D2B24;
 
   /* Fonts */
-  --font-display: "Cormorant Garamond", "Cormorant", Garamond, serif;
+  --font-display: "Quicksand", "Nunito", ui-rounded, system-ui, sans-serif;
   --font-body:    "Jost", "Helvetica Neue", system-ui, sans-serif;
+
+  /* Shadows — warm cocoa tint, never grey */
+  --shadow-sm: 0 2px 14px rgba(107, 76, 59, 0.05);
+  --shadow:    0 4px 24px rgba(107, 76, 59, 0.08);
+  --shadow-lg: 0 8px 30px rgba(107, 76, 59, 0.10);
 }
 
 @layer base {

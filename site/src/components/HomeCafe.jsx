@@ -25,7 +25,7 @@ export default function HomeCafe() {
             <h3 className="font-display font-light text-[72px] text-espresso m-0 mb-1 leading-[1]">
               27.05
             </h3>
-            <div className="font-display italic text-[18px] text-cocoa mb-6">2026</div>
+            <div className="font-display text-[18px] text-cocoa mb-6">2026</div>
 
             <div className="flex flex-col gap-3 text-[14px]">
               <div className="flex items-center gap-2.5 text-cocoa">
@@ -52,7 +52,7 @@ export default function HomeCafe() {
           </aside>
 
           {/* Sign-up card */}
-          <div className="bg-white rounded-[1.5rem] px-9 pt-9 pb-8 shadow-[0_4px_24px_rgba(107,76,59,0.08)]">
+          <div className="bg-white rounded-[1.5rem] px-9 pt-9 pb-8 shadow">
             <h3 className="font-display font-normal text-[26px] text-espresso m-0 mb-1">
               save my spot
             </h3>

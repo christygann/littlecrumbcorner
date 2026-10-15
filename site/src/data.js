@@ -1,6 +1,6 @@
 // publicDir is 'assets/', so files are served at /filename (no /assets/ prefix)
-export const LOGO_SRC       = '/logo-mark-cocoa.png'
-export const LOGO_BLUSH_SRC = '/logo-mark-blush.png'
+export const LOGO_SRC       = '/logo-mascot.png'
+export const LOCKUP_SRC     = '/logo-lockup-inline.png'
 
 export const MENU = [
   {
