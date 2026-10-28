@@ -50,6 +50,7 @@ a:hover{color:var(--deep-rose)}
 .oc-product.is-unavailable .oc-product-name,.oc-product.is-unavailable .oc-price-wrap,.oc-product.is-unavailable .oc-product-blurb{opacity:.55}
 .oc-product.is-unavailable:hover{box-shadow:var(--shadow-sm)}
 .oc-unavail-badge{position:absolute;top:12px;right:12px;z-index:1;box-shadow:var(--shadow-sm);border-radius:999px}
+.oc-photo-tag{display:none;position:absolute;top:8px;left:8px;z-index:1;pointer-events:none}
 .oc-photo-btn{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:pointer}
 .oc-from{display:flex;align-items:baseline;gap:6px}
 .oc-from>span:first-child{font-size:12px;color:var(--fg-muted)}
@@ -280,7 +281,20 @@ a:hover{color:var(--deep-rose)}
 .oc-hero-logo{max-width:320px}
 .oc-section,.oc-section-lg,.oc-section-xl{padding:56px 20px}
 .oc-page{padding:28px 20px 64px}
-.oc-product-grid{grid-template-columns:1fr;max-width:400px}
+.oc-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:none}
+.oc-product-photo{aspect-ratio:4/3}
+.oc-product-body{padding:8px 10px 10px;gap:2px}
+.oc-product-tag,.oc-product-blurb{display:none}
+.oc-photo-tag{display:block}
+.oc-photo-tag .lc-tag,.oc-unavail-badge .lc-tag{font-size:8px;letter-spacing:.15em;padding:.15rem .5rem}
+.oc-unavail-badge{top:8px;right:8px}
+.oc-product-name{font-size:15px;line-height:1.25;min-height:2.5em}
+.oc-product .lc-price{font-size:16px}
+.oc-product .lc-price-label,.oc-from>span:first-child,.oc-size-count{font-size:11px}
+.oc-product-actions{margin:4px 0 0;gap:4px}
+.oc-product .oc-stepper button{width:24px;height:32px;font-size:14px}
+.oc-product .oc-stepper span{min-width:14px;font-size:13px}
+.oc-add-btn{width:36px;height:32px}
 .oc-gallery{gap:10px}
 .oc-panel{padding:22px}
 .oc-method-grid,.oc-row-2,.oc-lookup-fields{grid-template-columns:1fr}

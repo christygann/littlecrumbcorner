@@ -36,6 +36,8 @@ function ProductCard({ g, inBag, onAdd, onChoose }) {
           ? <button type="button" className="oc-photo-btn" onClick={() => onChoose(g)} aria-label={`choose ${g.name} size`}><img src={g.photo} alt={g.name} /></button>
           : <img src={g.photo} alt={g.name} />}
         {g.unavailable && <span className="oc-unavail-badge"><Tag>unavailable</Tag></span>}
+        {/* on phones the tag sits on the photo to keep the card short */}
+        {!g.unavailable && g.tag && <span className="oc-photo-tag"><Tag variant="sage">{g.tag}</Tag></span>}
       </div>
       <div className="oc-product-body">
         <div className="oc-product-tag">{!g.unavailable && g.tag && <Tag variant="sage">{g.tag}</Tag>}</div>
