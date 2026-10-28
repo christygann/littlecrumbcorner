@@ -1,4 +1,4 @@
-import SectionHeader from './SectionHeader.jsx'
+import { SectionHeader } from './ui.jsx'
 import SignUpForm from './SignUpForm.jsx'
 import { IconClock, IconCal } from '../icons.jsx'
 import { CAFE } from '../data.js'

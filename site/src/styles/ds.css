@@ -1,0 +1,141 @@
+/* Little Crumb Corner design tokens + lc-* classes.
+   Mirrors .claude/skills/little-crumb-corner-design/colors_and_type.css —
+   fonts are loaded in index.html. */
+
+:root {
+  --blush:       #F2C4CE;
+  --rose:        #E8A0B0;
+  --dusty-pink:  #D4728A;
+  --deep-rose:   #B85070;
+
+  --sage-light:  #C8D8BC;
+  --sage:        #A8B89A;
+  --sage-dark:   #7A9068;
+  --pine:        #5C7050;
+
+  --cream:       #FAF6F0;
+  --linen:       #F0E8DE;
+  --cocoa:       #6B4C3B;
+  --espresso:    #3D2B24;
+  --white:       #FFFFFF;
+
+  --fg-muted:    color-mix(in oklab, var(--cocoa) 65%, transparent);
+  --eyebrow:     var(--sage-dark);
+  --rule:        color-mix(in oklab, var(--sage) 50%, transparent);
+
+  --font-display: "Quicksand", "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-body:    "Jost", "Helvetica Neue", system-ui, -apple-system, sans-serif;
+
+  --text-h1:      32px;
+  --text-h3:      18px;
+  --text-body-sm: 12px;
+  --text-caption: 10px;
+
+  --radius-sm:   0.5rem;
+  --radius:      0.9rem;
+  --radius-lg:   1.2rem;
+  --radius-xl:   1.5rem;
+  --radius-2xl:  2rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 14px rgba(107, 76, 59, 0.05);
+  --shadow:    0 4px 24px rgba(107, 76, 59, 0.08);
+  --shadow-lg: 0 8px 30px rgba(107, 76, 59, 0.10);
+}
+
+@media (min-width: 900px) {
+  :root {
+    --text-h1:      48px;
+    --text-h3:      22px;
+    --text-body-sm: 14px;
+    --text-caption: 11px;
+  }
+}
+
+.lc-eyebrow {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--eyebrow);
+}
+
+.lc-price {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-h3);
+  color: var(--deep-rose);
+}
+.lc-price-wrap { display: inline-flex; align-items: baseline; gap: 8px; }
+.lc-price-label {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--text-body-sm);
+  color: var(--cocoa);
+}
+
+.lc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius-2xl);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.lc-btn--primary { background: var(--cocoa); color: var(--blush); }
+.lc-btn--primary:hover:not(:disabled) { background: var(--espresso); }
+.lc-btn--secondary { background: transparent; color: var(--cocoa); border-color: var(--sage); }
+.lc-btn--secondary:hover:not(:disabled) { background: var(--linen); }
+
+.lc-tag {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: var(--blush);
+  color: var(--deep-rose);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.lc-tag--sage { background: var(--sage-light); color: var(--sage-dark); }
+
+.lc-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--rule);
+  border: 0;
+  margin: 1.5rem auto;
+}
+
+.lc-dots {
+  font-family: var(--font-body);
+  color: var(--sage);
+  letter-spacing: 0.5em;
+  text-align: center;
+}
+.lc-dots::before { content: "· · ·"; }
+
+.lc-section-header { text-align: center; margin-bottom: 36px; }
+.lc-section-header h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--text-h1);
+  color: var(--espresso);
+  text-transform: lowercase;
+  margin: 10px 0 6px;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}

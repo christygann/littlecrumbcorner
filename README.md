@@ -1,6 +1,6 @@
 # Little Crumb Corner
 
-Website and admin dashboard for a home cafe. Visitors can browse the menu and sign up for a session; the admin dashboard lets you view, search, edit, and export sign-ups.
+Website and admin dashboard for a home bakery. Visitors can order bakes online (self-collection or delivery, paid by PayNow) and look up their orders; the admin dashboard lets you view, search, edit, and export home cafe sign-ups and in-cafe orders.
 
 ## Structure
 
@@ -15,7 +15,7 @@ website/
 ## Stack
 
 - **Frontend:** React 18, Vite, Tailwind CSS v4
-- **Backend:** Supabase (PostgreSQL + Auth)
+- **Backend:** Supabase (PostgreSQL + Auth + Storage)
 - **Hosting:** Vercel (two separate projects)
 
 ## Local development
@@ -43,7 +43,17 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 
 ## Database setup
 
-Run `website/setup.sql` once in your Supabase project's SQL Editor. Then create your admin user under Authentication → Users → Invite user.
+1. Create a project at [supabase.com](https://supabase.com) (region: Southeast Asia (Singapore)).
+2. SQL Editor → New query → paste all of `website/setup.sql` → Run. It creates every table, policy, function and the private `payment-proofs` storage bucket.
+3. Authentication → Users → Add user → your email + a password (this is the admin login).
+4. Project Settings → API: copy the **Project URL** and the **anon public** key into both `.env` files (and Vercel).
+
+## Online orders
+
+- Prices and availability come from the `online_products` table. Edit a row in Table Editor (e.g. set `available` to true for strawberry shortcake) and the site follows, no redeploy needed. Photos, blurbs and sizes live in `site/src/data.js`.
+- Orders are placed through the `place_online_order` database function, which re-prices the order and re-checks every rule (two days' lead time, Sat/Sun collection, no Monday delivery, 6-digit postal code, uploaded PayNow screenshot). Customers can't read or write `online_orders` directly.
+- New orders appear in Table Editor → `online_orders`; PayNow screenshots are in Storage → `payment-proofs` (the file name is in `proof_path`). Change `status` to `prepared` → `ready` → `completed` and customers see it under "my orders".
+- The PayNow QR is served from `assets/paynow-qr.png`.
 
 ## Deployment
 

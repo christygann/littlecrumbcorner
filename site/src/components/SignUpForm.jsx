@@ -1,10 +1,6 @@
 import { useState, useRef } from 'react'
-import { createClient } from '@supabase/supabase-js'
+import { db } from '../lib/supabase.js'
 import { SLOTS, REFERRAL } from '../data.js'
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
-const db = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null
 
 const field = 'w-full px-3 py-2.5 bg-white/60 border border-cocoa/[0.18] rounded-lg text-[14px] text-cocoa leading-[1.4]'
 const label = 'block mb-1.5 text-[11px] tracking-[0.22em] uppercase font-medium text-cocoa/65'
