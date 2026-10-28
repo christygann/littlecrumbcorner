@@ -77,9 +77,9 @@ export default function App() {
           <>
             <Hero go={go} />
             <div className="lc-dots" style={{ fontSize: 18, marginBottom: 24 }} />
-            <About />
             <Shop menu={menu} cart={cart} onAdd={add} />
             <Gallery />
+            <About />
           </>
         )}
         {view === 'checkout' && <Checkout lines={lines} onPlace={place} onEditBag={() => setBagOpen(true)} go={go} />}

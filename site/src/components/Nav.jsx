@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { LOCKUP_SRC } from '../data.js'
 import { IconBag, IconClose, IconMenu } from '../icons.jsx'
 
-const LINKS = ['about', 'order', 'gallery']
+const LINKS = ['order', 'gallery', 'about']
 
 export default function Nav({ count, onBag, go }) {
   const [open, setOpen] = useState(false)

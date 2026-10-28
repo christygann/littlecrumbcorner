@@ -9,9 +9,9 @@ export const PAYNOW_NUMBER  = { value: '92372102', display: '9237 2102' }
 export const PRODUCTS = [
   { id: 'basque',       group: 'basque',     option: 'slice',              name: 'basque burnt cheesecake (slice)',         price: 5.5, unit: 'per slice',  photo: '/basque-cheesecake.png' },
   { id: 'basque-whole', group: 'basque',     option: 'whole cake · 8"',    name: 'basque burnt cheesecake (whole 8")',      price: 50,  unit: 'whole cake', photo: '/basque-cheesecake.png' },
-  { id: 'brownie',      group: 'brownie',    option: 'slice',              name: 'double fudge brownie (slice)',            price: 4.5, unit: 'per slice',  photo: '/double-fudge-brownie.png' },
-  { id: 'brownie-7',    group: 'brownie',    option: 'whole · 7" × 7"',    name: 'double fudge brownie (whole 7" × 7")',    price: 24,  unit: 'whole tray', photo: '/double-fudge-brownie.png' },
-  { id: 'brownie-10',   group: 'brownie',    option: 'whole · 10" × 10"',  name: 'double fudge brownie (whole 10" × 10")',  price: 48,  unit: 'whole tray', photo: '/double-fudge-brownie.png' },
+  { id: 'brownie-6',    group: 'brownie',    option: 'box of 6',                 name: 'double fudge brownie (box of 6)',                price: 16,  unit: 'box of 6',   photo: '/double-fudge-brownie.png' },
+  { id: 'brownie-7',    group: 'brownie',    option: 'box of 16 · 7" × 7"',      name: 'double fudge brownie (box of 16, 7" × 7")',      price: 30,  unit: 'box of 16',  photo: '/double-fudge-brownie.png' },
+  { id: 'brownie-10',   group: 'brownie',    option: 'box of 36 · 10" × 10"',    name: 'double fudge brownie (box of 36, 10" × 10")',    price: 48,  unit: 'box of 36',  photo: '/double-fudge-brownie.png' },
   { id: 'strawberry',   group: 'strawberry', option: 'slice',              name: 'strawberry shortcake',                    price: 5,   unit: 'per slice',  photo: '/strawberry-shortcake.png', available: false },
   { id: 'muffin',       group: 'muffin',     option: 'each',               name: 'apple cinnamon muffin',                   price: 4,   unit: 'each',       photo: '/apple-cinnamon-muffin.png', available: false },
 ]
@@ -49,8 +49,8 @@ export const SOCIALS = {
 export const FULFILMENT = {
   collect: {
     label: 'self-collection', fee: 0,
-    note: 'Saturday 6pm or Sunday 12pm at Paya Lebar MRT, Exit A.',
-    location: 'Paya Lebar MRT · Exit A',
+    note: 'Saturday 6pm or Sunday 12pm at Paya Lebar MRT, Exit E.',
+    location: 'Paya Lebar MRT · Exit E',
     days: { 6: '6:00pm', 0: '12:00pm' },
   },
   deliver: {

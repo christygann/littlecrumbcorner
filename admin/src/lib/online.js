@@ -3,7 +3,7 @@ import { db } from './supabase.js'
 
 // Keep in step with site/src/data.js and place_online_order() in setup.sql
 export const FULFILMENT = {
-  collect: { label: 'self-collection', fee: 0, location: 'Paya Lebar MRT · Exit A', days: { 6: '6:00pm', 0: '12:00pm' } },
+  collect: { label: 'self-collection', fee: 0, location: 'Paya Lebar MRT · Exit E', days: { 6: '6:00pm', 0: '12:00pm' } },
   deliver: { label: 'islandwide delivery', fee: 10, slots: ['10:00 — 13:00', '14:00 — 17:00', '18:00 — 21:00'] },
 }
 
