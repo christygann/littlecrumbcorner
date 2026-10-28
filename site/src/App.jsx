@@ -10,7 +10,7 @@ import Checkout, { Confirmation } from './components/Checkout.jsx'
 import MyOrders from './components/MyOrders.jsx'
 // HomeCafe (sign-ups) is kept for the next home cafe; render it again here when it's announced.
 import { cartLines, readJSON, writeJSON } from './lib/helpers.js'
-import { rememberOrder, useProducts } from './lib/orders.js'
+import { rememberOrder, useMenu } from './lib/orders.js'
 
 const CART_KEY = 'lcc-cart-v1'
 const HASH = { checkout: '#/checkout', orders: '#/orders', confirm: '#/orders' }
@@ -20,7 +20,7 @@ const viewFromHash = () => {
 }
 
 export default function App() {
-  const { menu, byId } = useProducts()
+  const { menu, byId, loading: menuLoading, error: menuError } = useMenu()
   const [view, setView] = useState(viewFromHash)
   const [cart, setCart] = useState(() => readJSON(CART_KEY, []))
   const [bagOpen, setBagOpen] = useState(false)
@@ -77,7 +77,7 @@ export default function App() {
           <>
             <Hero go={go} />
             <div className="lc-dots" style={{ fontSize: 18, marginBottom: 24 }} />
-            <Shop menu={menu} cart={cart} onAdd={add} />
+            <Shop menu={menu} loading={menuLoading} error={menuError} cart={cart} onAdd={add} />
             <Gallery />
             <About />
           </>

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { db } from './supabase.js'
-import { PRODUCTS, buildMenu } from '../data.js'
+import { LOGO_SRC } from '../data.js'
 import { readJSON, writeJSON } from './helpers.js'
 
 const NOT_CONFIGURED = 'Ordering is not set up yet. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env'
@@ -10,20 +10,49 @@ const GENERIC = 'Something went wrong. Please try again or message us on Telegra
 // else (network, auth) gets the generic message.
 const customerMessage = (err) => (err?.code === 'P0001' && err.message) || GENERIC
 
-// Menu with live prices and availability from online_products.
-export function useProducts() {
-  const [products, setProducts] = useState(PRODUCTS)
+// Turns menu_items + their online_products into menu cards.
+// An item shows as sold out when it's marked sold out or every size is;
+// hidden items and sizes aren't shown at all.
+export function buildMenu(rows) {
+  const menu = rows
+    .filter(i => i.status !== 'hidden')
+    .sort((a, b) => a.sort - b.sort)
+    .map(i => {
+      const photo = i.photo_url || LOGO_SRC
+      const options = (i.online_products || [])
+        .filter(p => p.status !== 'hidden')
+        .sort((a, b) => a.sort - b.sort)
+        .map(p => ({
+          id: p.id, group: i.id, option: p.option, name: p.name, unit: p.unit, photo,
+          price: Number(p.price), soldOut: p.status === 'sold_out',
+        }))
+      const status = i.status === 'available' && options.every(o => o.soldOut) ? 'sold_out' : i.status
+      const unavailable = status !== 'available'
+      return {
+        id: i.id, name: i.name, tag: i.tag, blurb: i.blurb, photo, hasPhoto: !!i.photo_url, status, unavailable,
+        options: options.map(o => ({ ...o, unavailable: unavailable || o.soldOut })),
+      }
+    })
+    .filter(g => g.options.length)
+  const byId = Object.fromEntries(menu.flatMap(g => g.options).map(p => [p.id, p]))
+  return { menu, byId }
+}
+
+// The live menu. Everything on it is managed from the admin's Menu tab.
+export function useMenu() {
+  const [state, setState] = useState({ rows: [], loading: !!db, error: db ? null : NOT_CONFIGURED })
   useEffect(() => {
     if (!db) return
-    db.from('online_products').select('id, price, available').then(({ data }) => {
-      if (!data?.length) return
-      const live = Object.fromEntries(data.map(r => [r.id, r]))
-      setProducts(PRODUCTS
-        .filter(p => live[p.id])
-        .map(p => ({ ...p, price: Number(live[p.id].price), available: live[p.id].available })))
+    const load = () => db.from('menu_items').select('*, online_products(*)').then(({ data, error }) => {
+      setState(prev => error ? { ...prev, loading: false, error: prev.rows.length ? null : GENERIC } : { rows: data, loading: false, error: null })
     })
+    load()
+    // pick up sold-out changes when a customer comes back to the tab
+    window.addEventListener('focus', load)
+    return () => window.removeEventListener('focus', load)
   }, [])
-  return buildMenu(products)
+  const built = useMemo(() => buildMenu(state.rows), [state.rows])
+  return { ...built, loading: state.loading, error: state.error }
 }
 
 // Uploads the PayNow screenshot (a JPEG data URL), returning its storage path.

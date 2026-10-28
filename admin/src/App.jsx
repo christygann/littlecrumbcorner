@@ -4,10 +4,12 @@ import LoginView from './components/LoginView.jsx'
 import DashboardView from './components/DashboardView.jsx'
 import OrdersView from './components/OrdersView.jsx'
 import OnlineOrdersView from './components/OnlineOrdersView.jsx'
+import MenuView from './components/MenuView.jsx'
 import { db } from './lib/supabase.js'
 
 const NAV_TABS = [
   { key: 'online',  label: 'Online orders' },
+  { key: 'menu',    label: 'Menu' },
   { key: 'orders',  label: 'Home cafe orders' },
   { key: 'signups', label: 'Sign-ups' },
 ]
@@ -60,7 +62,7 @@ export default function App() {
         </div>
       )}
       {session
-        ? view === 'online' ? <OnlineOrdersView /> : view === 'orders' ? <OrdersView /> : <DashboardView />
+        ? view === 'online' ? <OnlineOrdersView /> : view === 'menu' ? <MenuView /> : view === 'orders' ? <OrdersView /> : <DashboardView />
         : <LoginView onSuccess={setSession} />
       }
     </div>

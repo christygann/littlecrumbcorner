@@ -66,6 +66,10 @@ a:hover{color:var(--deep-rose)}
 .oc-option{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:14px 16px;background:var(--white);border:1px solid var(--linen);border-radius:var(--radius-lg);transition:border-color .2s}
 .oc-option.active{border-color:var(--cocoa)}
 .oc-option.is-unavailable{opacity:.55}
+.oc-option-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.oc-option-soldout{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--deep-rose)}
+.oc-photo-placeholder{object-fit:contain !important;padding:22%;background:var(--linen)}
+.oc-shop-status{text-align:center;font-family:var(--font-display);font-size:20px;color:var(--fg-muted);margin:0 auto;padding:40px 0}
 .oc-option-name{font-family:var(--font-display);font-size:17px;color:var(--espresso);line-height:1.25}
 .oc-sheet-foot{display:flex;flex-direction:column;gap:12px;padding:18px 22px 22px;border-top:1px solid var(--linen);background:var(--white)}
 .oc-add-wrap{position:relative;display:inline-flex}

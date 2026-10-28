@@ -41,6 +41,28 @@ export const IconChevronDown = ({ size = 16 }) => (
   <svg {...svgProps(size)}><polyline points="6 9 12 15 18 9" /></svg>
 )
 
+export const IconArrow = ({ size = 16, dir = 'up' }) => (
+  <svg {...svgProps(size)} style={{ transform: dir === 'down' ? 'rotate(180deg)' : 'none' }}>
+    <line x1="12" y1="19" x2="12" y2="5" />
+    <polyline points="6 11 12 5 18 11" />
+  </svg>
+)
+
+export const IconPlus = ({ size = 16 }) => (
+  <svg {...svgProps(size)}>
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+)
+
+export const IconUpload = ({ size = 20 }) => (
+  <svg {...svgProps(size)}>
+    <line x1="12" y1="15" x2="12" y2="4" />
+    <polyline points="7.5 8.5 12 4 16.5 8.5" />
+    <path d="M5 15v3.5a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V15" />
+  </svg>
+)
+
 // Round icon buttons for edit / delete
 export const iconBtn    = 'inline-flex items-center justify-center w-8 h-8 rounded-full text-cocoa/70 hover:text-cocoa hover:bg-linen cursor-pointer transition-colors'
 export const iconBtnDel = 'inline-flex items-center justify-center w-8 h-8 rounded-full text-deep-rose/80 hover:text-deep-rose hover:bg-deep-rose/10 cursor-pointer transition-colors'

@@ -48,9 +48,11 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 3. Authentication → Users → Add user → your email + a password (this is the admin login).
 4. Project Settings → API: copy the **Project URL** and the **anon public** key into both `.env` files (and Vercel).
 
+Upgrading an existing database: run each file in `website/migrations/` that you haven't run yet, oldest first, in the SQL Editor. (A new project only needs `setup.sql`.)
+
 ## Online orders
 
-- Prices and availability come from the `online_products` table. Edit a row in Table Editor (e.g. set `available` to true for strawberry shortcake) and the site follows, no redeploy needed. Photos, blurbs and sizes live in `site/src/data.js`.
+- The whole menu lives in the database and is managed from the admin dashboard's **Menu** tab: add, edit, reorder and delete items, upload photos, set sizes and prices, and mark an item or a single size as available, sold out, unavailable or hidden. The order site follows straight away, no redeploy needed. New items start hidden so you can set them up before they go live.
 - Orders are placed through the `place_online_order` database function, which re-prices the order and re-checks every rule (two days' lead time, Sat/Sun collection, no Monday delivery, 6-digit postal code, uploaded PayNow screenshot). Customers can't read or write `online_orders` directly.
 - Manage orders in the admin dashboard's **Online orders** tab: check PayNow screenshots, mark orders paid, move them through placed → being prepared → ready → completed (customers see this under "my orders"), edit or delete them, and see the collection/delivery runs and bake list.
 - The PayNow QR is served from `assets/paynow-qr.jpg`.

@@ -19,7 +19,9 @@ function ProductCard({ g, inBag, onAdd, onChoose }) {
   const [flash, setFlash] = useState(false)
   const multi = g.options.length > 1
   const single = g.options[0]
-  const minPrice = Math.min(...g.options.filter(o => !o.unavailable).map(o => o.price), Infinity)
+  const orderable = g.options.filter(o => !o.unavailable)
+  const minPrice = Math.min(...(orderable.length ? orderable : g.options).map(o => o.price))
+  const photoCls = g.hasPhoto ? '' : 'oc-photo-placeholder'
 
   useEffect(() => {
     if (!flash) return
@@ -33,9 +35,9 @@ function ProductCard({ g, inBag, onAdd, onChoose }) {
     <article className={`oc-product${g.unavailable ? ' is-unavailable' : ''}`} aria-disabled={g.unavailable || undefined}>
       <div className="oc-product-photo">
         {multi && !g.unavailable
-          ? <button type="button" className="oc-photo-btn" onClick={() => onChoose(g)} aria-label={`choose ${g.name} size`}><img src={g.photo} alt={g.name} /></button>
-          : <img src={g.photo} alt={g.name} />}
-        {g.unavailable && <span className="oc-unavail-badge"><Tag>unavailable</Tag></span>}
+          ? <button type="button" className="oc-photo-btn" onClick={() => onChoose(g)} aria-label={`choose ${g.name} size`}><img src={g.photo} alt={g.name} className={photoCls} /></button>
+          : <img src={g.photo} alt={g.name} className={photoCls} />}
+        {g.unavailable && <span className="oc-unavail-badge"><Tag>{g.status === 'sold_out' ? 'sold out' : 'unavailable'}</Tag></span>}
         {/* on phones the tag sits on the photo to keep the card short */}
         {!g.unavailable && g.tag && <span className="oc-photo-tag"><Tag variant="sage">{g.tag}</Tag></span>}
       </div>
@@ -43,14 +45,14 @@ function ProductCard({ g, inBag, onAdd, onChoose }) {
         <div className="oc-product-tag">{!g.unavailable && g.tag && <Tag variant="sage">{g.tag}</Tag>}</div>
         <h3 className="oc-product-name">{g.name}</h3>
         <div className="oc-price-wrap">
-          {multi && minPrice !== Infinity
+          {multi
             ? <div className="oc-from"><span>from</span><Price amount={minPrice} /></div>
             : <Price amount={single.price} label={single.unit} />}
         </div>
         <p className="oc-product-blurb">{g.blurb}</p>
         {multi ? (
           <div className="oc-product-actions">
-            <span className="oc-size-count">{g.options.length} sizes</span>
+            <span className="oc-size-count">{g.options.length} {g.options.length === 1 ? 'size' : 'sizes'}</span>
             <AddButton label={`choose ${g.name} size`} onClick={() => onChoose(g)} disabled={g.unavailable} inBag={inBag}>
               <IconBagPlus />
             </AddButton>
@@ -94,7 +96,7 @@ function OptionSheet({ g, onClose, onAdd }) {
       {cur && (
         <div className="oc-sheet" role="dialog" aria-label={`choose ${cur.name}`}>
           <div className="oc-sheet-head">
-            <img src={cur.photo} alt="" className="oc-sheet-thumb" />
+            <img src={cur.photo} alt="" className={`oc-sheet-thumb ${cur.hasPhoto ? '' : 'oc-photo-placeholder'}`} />
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="lc-eyebrow">choose a size</div>
               <div className="oc-drawer-title">{cur.name}</div>
@@ -106,7 +108,10 @@ function OptionSheet({ g, onClose, onAdd }) {
               const q = qty[o.id] || 0
               return (
                 <div key={o.id} className={`oc-option${q ? ' active' : ''}${o.unavailable ? ' is-unavailable' : ''}`}>
-                  <span className="oc-option-name">{o.option}</span>
+                  <div className="oc-option-info">
+                    <span className="oc-option-name">{o.option}</span>
+                    {o.soldOut && <span className="oc-option-soldout">sold out</span>}
+                  </div>
                   <Price amount={o.price} />
                   <Stepper size="sm" min={0} value={q} disabled={o.unavailable}
                     onChange={(v) => setQty(p => ({ ...p, [o.id]: v }))} />
@@ -129,7 +134,7 @@ function OptionSheet({ g, onClose, onAdd }) {
   )
 }
 
-export default function Shop({ menu, cart, onAdd }) {
+export default function Shop({ menu, loading, error, cart, onAdd }) {
   const [choosing, setChoosing] = useState(null)
   const close = useRef(() => setChoosing(null)).current
   const inBag = (g) => g.options.reduce((s, o) => s + (cart.find(c => c.id === o.id)?.qty || 0), 0)
@@ -137,9 +142,15 @@ export default function Shop({ menu, cart, onAdd }) {
   return (
     <section id="order" className="oc-section-lg" style={{ background: 'var(--linen)' }}>
       <SectionHeader eyebrow="place an order" title="what we bake" />
-      <div className="oc-product-grid">
-        {menu.map(g => <ProductCard key={g.id} g={g} inBag={inBag(g)} onAdd={onAdd} onChoose={setChoosing} />)}
-      </div>
+      {loading || error || !menu.length ? (
+        <p className="oc-shop-status">
+          {loading ? 'loading the menu …' : error || 'nothing on the menu right now — check back soon'}
+        </p>
+      ) : (
+        <div className="oc-product-grid">
+          {menu.map(g => <ProductCard key={g.id} g={g} inBag={inBag(g)} onAdd={onAdd} onChoose={setChoosing} />)}
+        </div>
+      )}
       <OptionSheet g={choosing} onClose={close} onAdd={onAdd} />
     </section>
   )

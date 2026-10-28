@@ -60,28 +60,61 @@ CREATE POLICY "admin_all" ON public.order_items FOR ALL TO authenticated USING (
 -- 3. Online orders (the public ordering site)
 -- ═════════════════════════════════════════════════════════════
 
--- Prices and availability live here. The site reads this table to show the
--- menu, and place_online_order() prices every order from it, so editing a row
--- in Table Editor changes the site without a redeploy.
+-- The menu. Managed from the admin's Menu tab; the order site reads it live,
+-- and place_online_order() prices every order from online_products.
+--
+-- status on an item:  available | sold_out | unavailable | hidden
+-- status on a size:   available | sold_out | hidden
+-- Only "available" can be ordered. "hidden" isn't shown on the site at all.
+CREATE TABLE public.menu_items (
+  id         text        PRIMARY KEY,
+  name       text        NOT NULL,
+  tag        text,
+  blurb      text,
+  photo_url  text,
+  status     text        NOT NULL DEFAULT 'available'
+             CHECK (status IN ('available', 'sold_out', 'unavailable', 'hidden')),
+  sort       integer     NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+-- One row per size. name is what gets saved on orders, e.g.
+-- "double fudge brownie (box of 9, 7" × 7")".
 CREATE TABLE public.online_products (
   id        text          PRIMARY KEY,
+  item_id   text          NOT NULL REFERENCES public.menu_items(id) ON DELETE CASCADE,
+  option    text          NOT NULL DEFAULT '',
+  unit      text,
   name      text          NOT NULL,
   price     numeric(10,2) NOT NULL CHECK (price >= 0),
-  available boolean       NOT NULL DEFAULT true,
+  status    text          NOT NULL DEFAULT 'available'
+            CHECK (status IN ('available', 'sold_out', 'hidden')),
+  available boolean       GENERATED ALWAYS AS (status = 'available') STORED,
   sort      integer       NOT NULL DEFAULT 0
 );
 
-INSERT INTO public.online_products (id, name, price, available, sort) VALUES
-  ('basque',       'basque burnt cheesecake (slice)',          5.50, true,  10),
-  ('basque-whole', 'basque burnt cheesecake (whole 8")',      50.00, true,  11),
-  ('brownie',      'double fudge brownie (large slice)',          5.00, true,  20),
-  ('brownie-7',    'double fudge brownie (box of 9, 7" × 7")',    35.00, true,  21),
-  ('brownie-10',   'double fudge brownie (box of 16, 10" × 10")', 55.00, true,  22),
-  ('strawberry',   'strawberry shortcake',                     5.00, false, 30),
-  ('muffin',       'apple cinnamon muffin',                    4.00, false, 40);
+CREATE INDEX online_products_item_idx ON public.online_products (item_id);
 
+INSERT INTO public.menu_items (id, name, tag, blurb, photo_url, status, sort) VALUES
+  ('basque',     'basque burnt cheesecake', 'baker''s favourite', 'Slow-baked, caramelised top with a soft, almost-set centre.',      '/basque-cheesecake.png',     'available',   10),
+  ('brownie',    'double fudge brownie',    'signature',          'Dense, fudgy, crackled top — dark chocolate folded through.',      '/double-fudge-brownie.png',  'available',   20),
+  ('strawberry', 'strawberry shortcake',    NULL,                 'Light vanilla sponge layered with cream and fresh strawberries.', '/strawberry-shortcake.png',  'unavailable', 30),
+  ('muffin',     'apple cinnamon muffin',   NULL,                 'Warm spiced apple folded with soft, tender crumb topping.',       '/apple-cinnamon-muffin.png', 'unavailable', 40);
+
+INSERT INTO public.online_products (id, item_id, option, unit, name, price, sort) VALUES
+  ('basque',       'basque',     'slice',                 'per slice',  'basque burnt cheesecake (slice)',              5.50, 10),
+  ('basque-whole', 'basque',     'whole cake · 8"',       'whole cake', 'basque burnt cheesecake (whole 8")',          50.00, 11),
+  ('brownie',      'brownie',    'large slice',           'per slice',  'double fudge brownie (large slice)',           5.00, 20),
+  ('brownie-7',    'brownie',    'box of 9 · 7" × 7"',    'box of 9',   'double fudge brownie (box of 9, 7" × 7")',    35.00, 21),
+  ('brownie-10',   'brownie',    'box of 16 · 10" × 10"', 'box of 16',  'double fudge brownie (box of 16, 10" × 10")', 55.00, 22),
+  ('strawberry',   'strawberry', 'slice',                 'per slice',  'strawberry shortcake',                         5.00, 30),
+  ('muffin',       'muffin',     'each',                  'each',       'apple cinnamon muffin',                        4.00, 40);
+
+ALTER TABLE public.menu_items      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.online_products ENABLE ROW LEVEL SECURITY;
 
+CREATE POLICY "public_read" ON public.menu_items      FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "admin_write" ON public.menu_items      FOR ALL    TO authenticated        USING (true) WITH CHECK (true);
 CREATE POLICY "public_read" ON public.online_products FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY "admin_write" ON public.online_products FOR ALL    TO authenticated        USING (true) WITH CHECK (true);
 
@@ -235,14 +268,15 @@ BEGIN
   END IF;
 
   FOR r IN
-    SELECT i.id, sum(i.qty)::int AS qty, op.name, op.price, op.available
+    SELECT i.id, sum(i.qty)::int AS qty, op.name, op.price, op.status, mi.status AS item_status
     FROM jsonb_to_recordset(p->'items') AS i(id text, qty int)
     LEFT JOIN public.online_products op ON op.id = i.id
-    GROUP BY i.id, op.name, op.price, op.available, op.sort
-    ORDER BY op.sort
+    LEFT JOIN public.menu_items mi ON mi.id = op.item_id
+    GROUP BY i.id, op.name, op.price, op.status, mi.status, mi.sort, op.sort
+    ORDER BY mi.sort, op.sort
   LOOP
-    IF r.name IS NULL OR NOT r.available THEN
-      RAISE EXCEPTION 'Something in your bag is no longer available.';
+    IF r.name IS NULL OR r.status <> 'available' OR r.item_status <> 'available' THEN
+      RAISE EXCEPTION 'Something in your bag is sold out or no longer available.';
     END IF;
     IF r.qty IS NULL OR r.qty < 1 OR r.qty > 30 THEN
       RAISE EXCEPTION 'Quantities must be between 1 and 30.';
@@ -318,6 +352,28 @@ CREATE POLICY "proof_admin_read" ON storage.objects
 CREATE POLICY "proof_admin_delete" ON storage.objects
   FOR DELETE TO authenticated
   USING (bucket_id = 'payment-proofs');
+
+
+
+-- ═════════════════════════════════════════════════════════════
+-- 5. Menu photos (Storage)
+-- ═════════════════════════════════════════════════════════════
+
+-- Public bucket: anyone can view the photos; only the admin can upload or remove them.
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES ('menu-photos', 'menu-photos', true, 5242880, ARRAY['image/jpeg', 'image/png', 'image/webp']);
+
+CREATE POLICY "menu_photo_admin_upload" ON storage.objects
+  FOR INSERT TO authenticated
+  WITH CHECK (bucket_id = 'menu-photos');
+
+CREATE POLICY "menu_photo_admin_update" ON storage.objects
+  FOR UPDATE TO authenticated
+  USING (bucket_id = 'menu-photos');
+
+CREATE POLICY "menu_photo_admin_delete" ON storage.objects
+  FOR DELETE TO authenticated
+  USING (bucket_id = 'menu-photos');
 
 -- ─────────────────────────────────────────────────────────────
 -- After running this SQL, create your admin login:

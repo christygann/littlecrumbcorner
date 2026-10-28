@@ -20,8 +20,11 @@ function MiniStepper({ value, onChange }) {
 }
 
 export function OnlineEditModal({ order, products, onSave, onDelete, onClose }) {
-  // products that are off the menu still show if this order has them
-  const rows = products.filter(p => p.available || order.items.some(i => i.id === p.id))
+  // sizes that are off the menu (or deleted from it) still show if this order has them
+  const rows = [
+    ...products.filter(p => p.available || order.items.some(i => i.id === p.id)),
+    ...order.items.filter(i => !products.some(p => p.id === i.id)).map(i => ({ ...i, available: false })),
+  ]
   const [f, setF] = useState(() => ({
     ...order,
     qty: Object.fromEntries(rows.map(p => [p.id, order.items.find(i => i.id === p.id)?.qty || 0])),
