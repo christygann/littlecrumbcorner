@@ -3,16 +3,21 @@ import Topbar from './components/Topbar.jsx'
 import LoginView from './components/LoginView.jsx'
 import DashboardView from './components/DashboardView.jsx'
 import OrdersView from './components/OrdersView.jsx'
+import OnlineOrdersView from './components/OnlineOrdersView.jsx'
 import { db } from './lib/supabase.js'
 
 const NAV_TABS = [
+  { key: 'online',  label: 'Online orders' },
+  { key: 'orders',  label: 'Home cafe orders' },
   { key: 'signups', label: 'Sign-ups' },
-  { key: 'orders',  label: 'Orders' },
 ]
+const VIEW_KEY = 'lcc-admin-view'
 
 export default function App() {
   const [session, setSession] = useState(undefined)
-  const [view, setView] = useState('signups')
+  const [view, setView] = useState(() => localStorage.getItem(VIEW_KEY) || 'online')
+
+  useEffect(() => { localStorage.setItem(VIEW_KEY, view) }, [view])
 
   useEffect(() => {
     if (!db) { setSession(null); return }
@@ -55,7 +60,7 @@ export default function App() {
         </div>
       )}
       {session
-        ? view === 'orders' ? <OrdersView /> : <DashboardView />
+        ? view === 'online' ? <OnlineOrdersView /> : view === 'orders' ? <OrdersView /> : <DashboardView />
         : <LoginView onSuccess={setSession} />
       }
     </div>

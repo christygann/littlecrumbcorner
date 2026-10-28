@@ -53,7 +53,7 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 - Prices and availability come from the `online_products` table. Edit a row in Table Editor (e.g. set `available` to true for strawberry shortcake) and the site follows, no redeploy needed. Photos, blurbs and sizes live in `site/src/data.js`.
 - Orders are placed through the `place_online_order` database function, which re-prices the order and re-checks every rule (two days' lead time, Sat/Sun collection, no Monday delivery, 6-digit postal code, uploaded PayNow screenshot). Customers can't read or write `online_orders` directly.
 - New orders appear in Table Editor → `online_orders`; PayNow screenshots are in Storage → `payment-proofs` (the file name is in `proof_path`). Change `status` to `prepared` → `ready` → `completed` and customers see it under "my orders".
-- The PayNow QR is served from `assets/paynow-qr.png`.
+- The PayNow QR is served from `assets/paynow-qr.jpg`.
 
 ## Deployment
 

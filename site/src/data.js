@@ -1,7 +1,7 @@
 // publicDir is 'assets/', so files are served at /filename (no /assets/ prefix)
 export const LOGO_SRC       = '/logo-mascot.png'
 export const LOCKUP_SRC     = '/logo-lockup-inline.png'
-export const PAYNOW_QR_SRC  = '/paynow-qr.png'
+export const PAYNOW_QR_SRC  = '/paynow-qr.jpg'
 export const PAYNOW_NUMBER  = { value: '92372102', display: '9237 2102' }
 
 // Fallback prices and availability. The live values come from the

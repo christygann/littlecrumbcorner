@@ -331,7 +331,7 @@ export default function Checkout({ lines, onPlace, onEditBag, go }) {
                     <img src={qrMissing ? LOGO_SRC : PAYNOW_QR_SRC} alt="PayNow QR code" onError={() => setQrMissing(true)} />
                   </div>
                   {!qrMissing && (
-                    <a className="oc-qr-dl" href={PAYNOW_QR_SRC} download="littlecrumbcorner-paynow-qr.png" aria-label="download qr code">
+                    <a className="oc-qr-dl" href={PAYNOW_QR_SRC} download="littlecrumbcorner-paynow-qr.jpg" aria-label="download qr code">
                       <IconDownload /><span>save qr</span>
                     </a>
                   )}
