@@ -74,9 +74,9 @@ CREATE TABLE public.online_products (
 INSERT INTO public.online_products (id, name, price, available, sort) VALUES
   ('basque',       'basque burnt cheesecake (slice)',          5.50, true,  10),
   ('basque-whole', 'basque burnt cheesecake (whole 8")',      50.00, true,  11),
-  ('brownie-6',    'double fudge brownie (box of 6)',              16.00, true,  21),
-  ('brownie-7',    'double fudge brownie (box of 16, 7" × 7")',   30.00, true,  22),
-  ('brownie-10',   'double fudge brownie (box of 36, 10" × 10")', 48.00, true,  23),
+  ('brownie',      'double fudge brownie (large slice)',          5.00, true,  20),
+  ('brownie-7',    'double fudge brownie (box of 9, 7" × 7")',    35.00, true,  21),
+  ('brownie-10',   'double fudge brownie (box of 16, 10" × 10")', 55.00, true,  22),
   ('strawberry',   'strawberry shortcake',                     5.00, false, 30),
   ('muffin',       'apple cinnamon muffin',                    4.00, false, 40);
 

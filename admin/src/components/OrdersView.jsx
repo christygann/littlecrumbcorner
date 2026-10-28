@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { db } from '../lib/supabase.js'
+import { IconBin, IconEdit, iconBtn, iconBtnDel } from '../icons.jsx'
 
 const MENU = [
   { category: 'Food', name: 'Burnt Cheesecake (slice)', price: 5.50 },
@@ -471,8 +472,8 @@ function AllOrdersTab({ orders, loading, onDelete, onStatusChange, onEdit }) {
                     <span className="text-[17px] font-display text-espresso">${parseFloat(o.total).toFixed(2)}</span>
                     <button
                       onClick={() => { setDeletingId(null); onEdit(o) }}
-                      className="text-[12px] tracking-[0.2em] uppercase px-2.5 py-1 rounded-full border border-cocoa/20 text-cocoa cursor-pointer hover:opacity-85 transition-opacity"
-                    >edit</button>
+                      className={iconBtn} aria-label="edit order" title="edit"
+                    ><IconEdit /></button>
                     {deletingId === o.id ? (
                       <div className="flex gap-1.5 items-center">
                         <span className="text-[13px] text-cocoa/60">sure?</span>
@@ -488,8 +489,8 @@ function AllOrdersTab({ orders, loading, onDelete, onStatusChange, onEdit }) {
                     ) : (
                       <button
                         onClick={() => setDeletingId(o.id)}
-                        className="text-[12px] tracking-[0.2em] uppercase px-2.5 py-1 rounded-full border border-deep-rose/30 text-deep-rose cursor-pointer hover:opacity-85 transition-opacity"
-                      >delete</button>
+                        className={iconBtnDel} aria-label="delete order" title="delete"
+                      ><IconBin /></button>
                     )}
                   </div>
                 </div>

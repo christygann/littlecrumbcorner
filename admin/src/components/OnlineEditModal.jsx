@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { IconBin, iconBtnDel } from '../icons.jsx'
 import { FULFILMENT, WEB_STATUS, WEB_STATUS_KEYS, dowOf, fmt, fmtPlaced, proofUrl } from '../lib/online.js'
 
 export const wLabel = 'text-[11px] tracking-[0.2em] uppercase text-sage-dark font-medium'
@@ -135,7 +136,7 @@ export function OnlineEditModal({ order, products, onSave, onDelete, onClose }) 
               <button onClick={() => setConfirmDel(false)} className={`${wPill} border border-cocoa/20`}>no</button>
             </div>
           ) : (
-            <button onClick={() => setConfirmDel(true)} className={`${wPill} border border-deep-rose/30 text-deep-rose ml-auto`}>delete</button>
+            <button onClick={() => setConfirmDel(true)} className={`${iconBtnDel} ml-auto`} aria-label="delete order" title="delete"><IconBin /></button>
           )}
         </div>
       </div>

@@ -4,17 +4,7 @@ import {
   addDaysKey, exportOnlineCSV, fmt, fmtDay, fmtDow, fmtPlaced, nextLabel, todayKey, useOnlineOrders,
 } from '../lib/online.js'
 import { OnlineEditModal, ProofLightbox, wDark, wGhost, wLabel, wPill } from './OnlineEditModal.jsx'
-
-const svg = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round', viewBox: '0 0 24 24' }
-const IconPin = ({ size = 16 }) => (
-  <svg width={size} height={size} {...svg}><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.3" /></svg>
-)
-const IconTruck = ({ size = 16 }) => (
-  <svg width={size} height={size} {...svg}><path d="M3 6.5h10.5v10H3z" /><path d="M13.5 9.5h4l3 3.2v3.8h-7" /><circle cx="7" cy="17.5" r="1.8" /><circle cx="17" cy="17.5" r="1.8" /></svg>
-)
-const IconChevronDown = ({ size = 16 }) => (
-  <svg width={size} height={size} {...svg}><polyline points="6 9 12 15 18 9" /></svg>
-)
+import { IconChevronDown, IconEdit, IconPin, IconTruck, iconBtn } from '../icons.jsx'
 
 const RANGES = [
   { k: 'upcoming', l: 'upcoming' }, { k: 'today', l: 'today' }, { k: 'week', l: 'next 7 days' },
@@ -73,7 +63,7 @@ function OnlineOrderCard({ o, onUpdate, onEdit, onProof }) {
         <div className="flex flex-col items-end gap-2 shrink-0">
           <div className="flex items-center gap-3">
             <span className="font-display text-[18px] text-espresso">{fmt(o.total)}</span>
-            <button onClick={() => onEdit(o)} className={`${wPill} border border-cocoa/20 text-cocoa bg-white/60`}>edit</button>
+            <button onClick={() => onEdit(o)} className={iconBtn} aria-label="edit order" title="edit"><IconEdit /></button>
             <button onClick={() => setOpen(!open)} aria-label="details" className={`p-1 text-cocoa/70 cursor-pointer transition-transform ${open ? 'rotate-180' : ''}`}>
               <IconChevronDown />
             </button>

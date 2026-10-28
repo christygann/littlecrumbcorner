@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { db } from '../lib/supabase.js'
+import { IconBin, IconEdit, iconBtn, iconBtnDel } from '../icons.jsx'
 
 function fmtDate(iso) {
   const d = new Date(iso)
@@ -294,18 +295,18 @@ export default function DashboardView() {
                       </button>
                     </div>
                   ) : (
-                    <div className="flex gap-1.5">
+                    <div className="flex gap-0.5">
                       <button
                         onClick={() => { setDeletingId(null); setEditing(s) }}
-                        className="text-[10px] tracking-[0.2em] uppercase px-2.5 py-1 rounded-full border border-cocoa/20 text-cocoa cursor-pointer hover:opacity-85 transition-opacity"
+                        className={iconBtn} aria-label="edit sign-up" title="edit"
                       >
-                        edit
+                        <IconEdit />
                       </button>
                       <button
                         onClick={() => { setEditing(null); setDeletingId(s.id) }}
-                        className="text-[10px] tracking-[0.2em] uppercase px-2.5 py-1 rounded-full border border-deep-rose/30 text-deep-rose cursor-pointer hover:opacity-85 transition-opacity"
+                        className={iconBtnDel} aria-label="delete sign-up" title="delete"
                       >
-                        delete
+                        <IconBin />
                       </button>
                     </div>
                   )}
